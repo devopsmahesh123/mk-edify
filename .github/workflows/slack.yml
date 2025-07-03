@@ -1,4 +1,17 @@
 name: Slack Notification
 on: workflow_dispatch
 jobs: 
-  slack_notification:
+  slack-notification:
+    runs-on: build
+    steps:
+      - name: Send notification to slack
+        uses: slackapi/slack-github-action@v2.1.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK }}
+          webhook-type: incoming.webhook
+          payload: |
+            text: "We are from github actions"
+            channel: "dev"
+          
+      
+  
