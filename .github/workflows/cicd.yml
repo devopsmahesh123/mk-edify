@@ -2,7 +2,7 @@ name: CI-CD Setup
 on: workflow_dispatch
 jobs: 
   slack-notification:
-    runs-on: build
+    runs-on: ubuntu:latest
     steps:
       - name: Send notification to slack
         uses: slackapi/slack-github-action@v2.1.0
@@ -24,17 +24,17 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build docker image
-        run: docker build -t ${{ vars.DOCKER_USERNAME }}//mk-edify:latest
+        run: docker build -t ${{ vars.DOCKER_USERNAME }}/mk-edify:latest
       - name: Push Docker image
-        run: docker push ${{ vars.DOCKER_USERNAME }}//mk-edify:latest
+        run: docker push ${{ vars.DOCKER_USERNAME }}/mk-edify:latest
   deploy:
     runs-on: build
     needs: build
     steps: 
       - name: deploy and run container
         run: |
-          docker pull ${{ vars.DOCKER_USERNAME }}//mk-edify:latest
-          docker run -d -p 80:80 --name ${{ vars.DOCKER_USERNAME }}//mk-edify:latest
+          docker pull ${{ vars.DOCKER_USERNAME }}/mk-edify:latest
+          docker run -d -p 80:80 --name ${{ vars.DOCKER_USERNAME }}/mk-edify:latest
       - name: Notify Slack - Deployment Completed
         uses: slackapi/slack-github-action@v1.25.0
         with:
