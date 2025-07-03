@@ -13,7 +13,7 @@ jobs:
             text: "Build Started"
             channel: "dev-testing"
   Build:
-    runs-on: build
+    runs-on: ubtuntu:latest
     needs: slack-notification
     steps: 
       - name: Checkout
