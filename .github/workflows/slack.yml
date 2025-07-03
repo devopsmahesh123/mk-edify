@@ -1,0 +1,4 @@
+name: Slack Notification
+on: workflow_dispatch
+jobs: 
+  slack_notification:
